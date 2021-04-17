@@ -4,6 +4,11 @@
 
 #include "config.h"
 #include "helper.h"
+#include "game.h"
+
+Game::MenuScreen menuScreen;
+Game::GameScreen gameScreen;
+Game::Screen *currentScreen;
 
 int main() {
     // Enable config flags for resizable window and vertical synchro
@@ -18,12 +23,11 @@ int main() {
     // Texture scale filter to use
     SetTextureFilter(target.texture, FILTER_BILINEAR);
 
+    currentScreen = &menuScreen;
+
 #ifdef GAME_START_FULLSCREEN
     ToggleFullscreen();
 #endif
-
-    // Load your assets
-    Texture2D texture = LoadTexture("assets/graphics/testimage.png");
 
     // Main game loop
     while (!WindowShouldClose()) // Detect window close button or ESC key
@@ -31,44 +35,25 @@ int main() {
         // Compute required framebuffer scaling
         float scale = min((float) GetScreenWidth() / Game::ScreenWidth, (float) GetScreenHeight() / Game::ScreenHeight);
 
-        // ---------------------------------------------------------------------------------
-        // Process input
-        // ---------------------------------------------------------------------------------
-
         // Update virtual mouse (clamped mouse value behind game screen)
         Vector2 mouse = GetMousePosition();
         Vector2 virtualMouse = {0};
-        virtualMouse.x = (mouse.x - (static_cast<float>(GetScreenWidth()) - (Game::ScreenWidth * scale)) * 0.5f) / scale;
-        virtualMouse.y = (mouse.y - (static_cast<float>(GetScreenHeight()) - (Game::ScreenHeight * scale)) * 0.5f) / scale;
+        virtualMouse.x =
+                (mouse.x - (static_cast<float>(GetScreenWidth()) - (Game::ScreenWidth * scale)) * 0.5f) / scale;
+        virtualMouse.y =
+                (mouse.y - (static_cast<float>(GetScreenHeight()) - (Game::ScreenHeight * scale)) * 0.5f) / scale;
         virtualMouse = ClampValue(virtualMouse, (Vector2) {0, 0}, (Vector2) {static_cast<float>(Game::ScreenWidth),
                                                                              static_cast<float>(Game::ScreenHeight)});
 
-        // Your process input code here...
-
-        // ---------------------------------------------------------------------------------
-        // Update game
-        // ---------------------------------------------------------------------------------
-
-        // Your update game code here...
-
-        // ---------------------------------------------------------------------------------
-        // Draw
-        // ---------------------------------------------------------------------------------
+        currentScreen->ProcessInput();
+        currentScreen->Update();
 
         BeginDrawing();
         ClearBackground(BLACK); // Letterbox color
 
         // Draw everything in the render texture, note this will not be rendered on screen, yet
         BeginTextureMode(target);
-        {
-            // Your drawing code here...
-            ClearBackground(WHITE);         // Clear render texture background color
-            DrawText(TextFormat("Default Mouse: [%i , %i]", (int) mouse.x, (int) mouse.y), 350, 25, 20, BLUE);
-            DrawText(TextFormat("Virtual Mouse: [%i , %i]", (int) virtualMouse.x, (int) virtualMouse.y), 350, 55, 20,
-                     GREEN);
-            DrawTexture(texture, 100, 100, WHITE);
-        }
-
+            currentScreen->Draw();
         EndTextureMode();
 
         // Draw RenderTexture2D to window, properly scaled
