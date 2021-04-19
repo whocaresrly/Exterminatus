@@ -42,8 +42,8 @@ int main() {
                 (mouse.x - (static_cast<float>(GetScreenWidth()) - (Game::ScreenWidth * scale)) * 0.5f) / scale;
         virtualMouse.y =
                 (mouse.y - (static_cast<float>(GetScreenHeight()) - (Game::ScreenHeight * scale)) * 0.5f) / scale;
-        virtualMouse = ClampValue(virtualMouse, (Vector2) {0, 0}, (Vector2) {static_cast<float>(Game::ScreenWidth),
-                                                                             static_cast<float>(Game::ScreenHeight)});
+        virtualMouse = ClampValue(virtualMouse, {0, 0}, {static_cast<float>(Game::ScreenWidth),
+                                                         static_cast<float>(Game::ScreenHeight)});
 
         currentScreen->ProcessInput();
         currentScreen->Update();
@@ -53,7 +53,7 @@ int main() {
 
         // Draw everything in the render texture, note this will not be rendered on screen, yet
         BeginTextureMode(target);
-            currentScreen->Draw();
+        currentScreen->Draw();
         EndTextureMode();
 
         // Draw RenderTexture2D to window, properly scaled
