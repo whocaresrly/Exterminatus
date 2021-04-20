@@ -1,15 +1,15 @@
 #pragma once
 
-#define max(a, b) ((a)>(b)? (a) : (b))
-#define min(a, b) ((a)<(b)? (a) : (b))
+#define MAX(a, b) ((a)>(b)? (a) : (b))
+#define MIN(a, b) ((a)<(b)? (a) : (b))
 
-// Clamp Vector2 value with min and max and return a new vector2
+// Clamp Vector2 value with MIN and MAX and return a new vector2
 // NOTE: Required for virtual mouse, to clamp inside virtual game size
-Vector2 ClampValue(Vector2 value, Vector2 min, Vector2 max) {
+Vector2 ClampValue(Vector2 value, Vector2 MIN, Vector2 MAX) {
     Vector2 result = value;
-    result.x = (result.x > max.x) ? max.x : result.x;
-    result.x = (result.x < min.x) ? min.x : result.x;
-    result.y = (result.y > max.y) ? max.y : result.y;
-    result.y = (result.y < min.y) ? min.y : result.y;
+    result.x = (result.x > MAX.x) ? MAX.x : result.x;
+    result.x = (result.x < MIN.x) ? MIN.x : result.x;
+    result.y = (result.y > MAX.y) ? MAX.y : result.y;
+    result.y = (result.y < MIN.y) ? MIN.y : result.y;
     return result;
 }

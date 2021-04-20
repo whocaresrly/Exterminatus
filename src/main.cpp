@@ -32,7 +32,7 @@ int main() {
     while (!WindowShouldClose()) // Detect window close button or ESC key
     {
         // Compute required framebuffer scaling
-        float scale = min((float) GetScreenWidth() / Game::ScreenWidth, (float) GetScreenHeight() / Game::ScreenHeight);
+        float scale = MIN((float) GetScreenWidth() / Game::ScreenWidth, (float) GetScreenHeight() / Game::ScreenHeight);
 
         // Update virtual mouse (clamped mouse value behind game screen)
         Vector2 mouse = GetMousePosition();
