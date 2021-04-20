@@ -6,13 +6,13 @@
 
 Game::GameScreen::GameScreen() {
     // Your screen initialization code here...
-    this->textures.push_back(LoadTexture("assets/graphics/testimage.png"));
+    this->sprites.push_back(new Game::Sprite(LoadTexture("assets/graphics/testimage.png"), {100, 100}, true));
 }
 
 Game::GameScreen::~GameScreen() {
     // Your screen cleanup code here...
-    for (Texture2D texture : this->textures)
-        UnloadTexture(texture);
+    for (Sprite* sprite : this->sprites)
+        delete sprite;
 }
 
 void Game::GameScreen::ProcessInput() {
@@ -29,6 +29,9 @@ void Game::GameScreen::Draw() {
     ClearBackground(RAYWHITE);
     DrawText("Game - press ENTER for menu", 10, 10, 30, LIGHTGRAY);
 
-    for (Texture2D texture : this->textures)
-        DrawTexture(texture, 100, 100, RAYWHITE);
+    for (Sprite* sprite : this->sprites) {
+        if(sprite->visible)
+            DrawTexture(sprite->texture, sprite->pos.x, sprite->pos.y, RAYWHITE);
+    }
+
 }

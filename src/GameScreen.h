@@ -5,11 +5,12 @@
 #include "raylib.h"
 
 #include "Screen.h"
+#include "Sprite.h"
 
 namespace Game {
     class GameScreen : public Screen {
     private:
-        std::vector<Texture2D> textures;
+        std::vector<Sprite*> sprites;
 
         GameScreen();
 
