@@ -4,6 +4,4 @@
 #include "MenuScreen.h"
 #include "GameScreen.h"
 
-extern Game::MenuScreen menuScreen;
-extern Game::GameScreen gameScreen;
 extern Game::Screen* currentScreen;

@@ -6,9 +6,7 @@
 #include "helper.h"
 #include "game.h"
 
-Game::MenuScreen menuScreen;
-Game::GameScreen gameScreen;
-Game::Screen *currentScreen;
+Game::Screen* currentScreen;
 
 int main() {
     // Enable config flags for resizable window and vertical synchro
@@ -23,11 +21,12 @@ int main() {
     // Texture scale filter to use
     SetTextureFilter(target.texture, FILTER_BILINEAR);
 
-    currentScreen = &menuScreen;
-
 #ifdef GAME_START_FULLSCREEN
     ToggleFullscreen();
 #endif
+
+    // Set start screen
+    currentScreen = Game::MenuScreen::getInstance();
 
     // Main game loop
     while (!WindowShouldClose()) // Detect window close button or ESC key
