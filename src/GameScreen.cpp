@@ -6,9 +6,10 @@
 
 Game::GameScreen::GameScreen() {
     // Your screen initialization code here...
+    Vector2 vec = { 100.0f, 100.0f };
     this->sprites.push_back(
             std::make_unique<Game::Sprite>(LoadTexture("assets/graphics/testimage.png"),
-                                           (Vector2) {100, 100},
+                                           vec,
                                            true)
     );
 }
@@ -33,6 +34,6 @@ void Game::GameScreen::Draw() {
 
     for (const auto &sprite : this->sprites) {
         if (sprite->visible)
-            DrawTexture(sprite->texture, sprite->pos.x, sprite->pos.y, RAYWHITE);
+            DrawTexture(sprite->texture, (int) sprite->pos.x, (int) sprite->pos.y, RAYWHITE);
     }
 }
