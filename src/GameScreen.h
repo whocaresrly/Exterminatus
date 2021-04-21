@@ -10,7 +10,7 @@
 namespace Game {
     class GameScreen : public Screen {
     private:
-        std::vector<Sprite*> sprites;
+        std::vector<std::unique_ptr<Sprite>> sprites;
 
         GameScreen();
 
