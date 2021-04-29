@@ -3,6 +3,8 @@
 namespace Game {
     class Screen {
     public:
+        virtual ~Screen() = default;
+
         virtual void ProcessInput() = 0;
 
         virtual void Update() = 0;
