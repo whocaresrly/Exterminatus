@@ -7,12 +7,12 @@
 #include "game.h"
 
 Game::Screen* currentScreen;
-
 int main() {
     // Enable config flags for resizable window and vertical synchro
     SetConfigFlags(FLAG_WINDOW_RESIZABLE | FLAG_VSYNC_HINT | FLAG_MSAA_4X_HINT);
     InitWindow(Game::ScreenWidth, Game::ScreenHeight, Game::PROJECT_NAME);
     SetWindowMinSize(Game::ScreenWidth / 2, Game::ScreenHeight / 2);
+   
     // Set game to run at 60 frames-per-second
     SetTargetFPS(60);
 
@@ -21,17 +21,23 @@ int main() {
     // Texture scale filter to use
     SetTextureFilter(target.texture, FILTER_BILINEAR);
 
+
 #ifdef GAME_START_FULLSCREEN
     ToggleFullscreen();
 #endif
 
     // Set start screen
     currentScreen = Game::MenuScreen::getInstance();
-
+        //Music
+    InitAudioDevice();
+    Music music = LoadMusicStream("assets/audio/tracks/Ross_Bugden_-_Solstice.mp3");
+    PlayMusicStream(music); 
+    music.looping = true;
     // Main game loop
     while (!WindowShouldClose()) // Detect window close button or ESC key
     {
-        // Compute required framebuffer scaling
+        UpdateMusicStream(music);
+    // Compute required framebuffer scaling
         float scale = MIN((float) GetScreenWidth() / Game::ScreenWidth, (float) GetScreenHeight() / Game::ScreenHeight);
 
         // Update virtual mouse (clamped mouse value behind game screen)

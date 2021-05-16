@@ -6,7 +6,7 @@ namespace Game {
     class MenuScreen : public Screen {
     private:
         MenuScreen();
-
+        Texture2D backgroundTexture;
     public:
         static Screen * getInstance() {
             static MenuScreen instance;
